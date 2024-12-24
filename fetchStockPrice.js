@@ -11,7 +11,7 @@ const fetchStockPrice = async () => {
           function: 'TIME_SERIES_INTRADAY',
           symbol: 'AAPL',
           interval: '1min',
-          apikey: process.env.ALPHA_KEY_A,
+          apikey: process.env.ALPHA_KEY,
         },
       });
       return(data["Time Series (1min)"])

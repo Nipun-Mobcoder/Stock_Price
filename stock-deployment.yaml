@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stock-microservice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: stock-microservice
+  template:
+    metadata:
+      labels:
+        app: stock-microservice
+    spec:
+      containers:
+      - name: stock-middleware
+        image: nipunmobcoder/stock-microservice
+        env: 
+        - name: KAFKA_BROKER
+          valueFrom:
+            secretKeyRef:
+              name: stock-secret
+              key: KAFKA_BROKER
+        - name: ALPHA_URL
+          valueFrom:
+            secretKeyRef:
+              name: stock-secret
+              key: ALPHA_URL
+        - name: ALPHA_KEY
+          valueFrom:
+            secretKeyRef:
+              name: stock-secret
+              key: ALPHA_KEY
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 8000
